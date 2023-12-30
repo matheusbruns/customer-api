@@ -11,7 +11,6 @@ export class CustomerCreate {
     async execute(request: Request, response: Response) {
         const { name, document } = request.body
         const customer = Customer.create(name, document)
-        console.log(customer)
         await this.repository.save(customer)
         response.status(201).json({customer})
     }

@@ -7,9 +7,7 @@
 import Dotenv from "dotenv"
 Dotenv.config({ path: 'env/dev.env' })
 
-console.log(process.env.DB_PASSWORD)
-
-/* export const development = {
+export const development = {
     client: 'mysql',
     connection: {
         user: process.env.DB_USER ?? '',
@@ -18,17 +16,8 @@ console.log(process.env.DB_PASSWORD)
         port: process.env.DB_PORT,
         database: process.env.DB_DATABASE
     }
-}; */
-export const development = {
-    client: 'mysql',
-    connection: {
-        user: "root",
-        password: '',
-        host: 'localhost',
-        port: 3306,
-        database: 'customer'
-    }
 };
+
 export const staging = {
     client: 'postgresql',
     connection: {
@@ -44,6 +33,7 @@ export const staging = {
         tableName: 'knex_migrations'
     }
 };
+
 export const production = {
     client: 'postgresql',
     connection: {

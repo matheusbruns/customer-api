@@ -2,6 +2,7 @@ import knex, { Knex } from 'knex';
 import { Customer } from '../../../model/Customer';
 import { CustomerRepository } from '../../../model/repository/CustomerRepository';
 import { development } from './KnexConfig';
+import { Uuid } from '../../../model/Uuid';
 
 export class CustomerRepositoryDatabase implements CustomerRepository {
     private connection: Knex
@@ -11,7 +12,6 @@ export class CustomerRepositoryDatabase implements CustomerRepository {
     }
 
     async save(customer: Customer): Promise<void> {
-        console.log(customer)
         await this.connection('customer').insert({
             'id': customer.getId().getValue(),
             'name': customer.getName(),
@@ -33,6 +33,14 @@ export class CustomerRepositoryDatabase implements CustomerRepository {
         }
 
         return customerCollection
+    }
+
+    async getById(id: Uuid): Promise<Customer> {
+        const customer: any = await this.connection('customer').select('*').where({ 'id': id.getValue() })
+        if (!customer) {
+            throw new Error(`Customer not found: ${id.getValue()}`)
+        }
+        return Customer.create(customer[0]['name'], customer[0]['document'], customer[0]['id'])
     }
 
 }
