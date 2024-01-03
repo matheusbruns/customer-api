@@ -10,7 +10,7 @@ export class DocumentFactory {
         }
 
         if(Cnpj.isValid(value)){
-            return new Cpf(value)
+            return new Cnpj(value)
         }
 
         throw new Error(`Value not is document valid: ${value}`)
